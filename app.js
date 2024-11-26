@@ -27,7 +27,17 @@ app.get("/", async (req, resp) => {
     resp.send("error");
   }
 });
+app.post("/test",async (req,res)=>{
 
+  const conn = await db()
+  const {email,password} = req.body
+  
+  const [results] = await conn.query("SELECT * FROM logindata where name="+email);
+
+  console.log(results);
+
+  return res.send("Hello")
+})
 app.post("/data",validate ,async (req, resp) => {
   try {
     const data = await db();
@@ -64,18 +74,18 @@ app.post("/login", authenticate, async (req, resp) => {
 });
 app.post('/update',authenticate,update, async(req,resp)=>
 {
-    resp.send('password changed')
+    resp.send('password changed');
 })
 app.post('/logout',async(req,resp)=>
 {
   const {status} = req.body;
   const val= 'logout'
+
  
   if(status === val )
   {
-    resp.clearCookie('token');
+    return resp.clearCookie("token").send("hello");
   }
-
 })
 
 app.listen(4500);

@@ -24,10 +24,10 @@ const authenticate = async (req, resp, next) => {
             }
 
             const [{ password }] = result;
-
-            
+    
+              
             const isMatch = await bcrypt.compare(pass, password);
-
+    
       
             if (isMatch) {
                // return resp.send("Match successful");
